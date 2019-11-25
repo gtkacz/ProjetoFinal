@@ -29,10 +29,10 @@ pygame.display.set_caption("Cobrinha")
 # sprites
 cabeca = pygame.image.load('cabeca.png')
 coelho = pygame.image.load('coelho.png')
-fundo = pygame.image.load('ground.png')
+fundo = pygame.image.load('ground.jpg')
 
-cabeca = pygame.transform.scale(cabeca, (20, 20))
-coelho = pygame.transform.scale(coelho, (20, 20))
+cabeca = pygame.transform.scale(cabeca, (40, 40))
+coelho = pygame.transform.scale(coelho, (40, 40))
 fundo = pygame.transform.scale(fundo, (WIDTH, HEIGHT))
 
 # musicas e sons
