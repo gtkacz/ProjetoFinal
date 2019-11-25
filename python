@@ -83,20 +83,35 @@ class Snake(pygame.sprite.Sprite):
 
 
 class Rabo(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, direcao):
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = pygame.image.load(path.join(img_dir, "rabo_direita.png")).convert()
+        if direcao == 0:
+            self.image = pygame.image.load(path.join(img_dir, "rabo_baixo.png")).convert()
+            self.image = pygame.transform.scale(self.image, (25, 25))
+            self.image.set_colorkey(BLACK)
 
-        self.image = pygame.transform.scale(self.image, (25, 25))
 
-        self.image.set_colorkey(BLACK)
+        elif direcao == 2:
+            self.image = pygame.image.load(path.join(img_dir, "rabo_cima.png")).convert()
+            self.image = pygame.transform.scale(self.image, (25, 25))
+            self.image.set_colorkey(BLACK)
+
+        elif direcao == 1:
+            self.image = pygame.image.load(path.join(img_dir, "rabo.png")).convert()
+            self.image = pygame.transform.scale(self.image, (25, 25))
+            self.image.set_colorkey(BLACK)
+
+        elif direcao == 3:
+            self.image = pygame.image.load(path.join(img_dir, "rabo.png")).convert()
+            self.image = pygame.transform.scale(self.image, (25, 25))
+            self.image.set_colorkey(BLACK)
 
         self.rect = self.image.get_rect()
 
         self.rect.x = snake.rect.x - 25
         self.rect.y = snake.rect.y
-        self.speedx =snake.speedx
+        self.speedx = snake.speedx
         self.speedy = snake.speedy
 
     def atualiza(self, direcao):
