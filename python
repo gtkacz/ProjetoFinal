@@ -34,6 +34,37 @@ lado_coelho = 20
 
 direcao = "direita"
 
+fonte_pequena = pygame.font.SysFont("comicsansms", 24)
+fonte_media = pygame.font.SysFont("comicsansms", 48)
+fonte_grande = pygame.font.SysFont("comicsansms", 72)
+
+def pause():
+    pausado = True
+    message_to_screen("Pausado", WHITE, -100, "gde")
+    message_to_screen("Aperte Espaço para continuar ou Esc para sair.", WHITE, 25)
+    pygame.display.update()
+
+    while pausado:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.QUIT()
+                quit()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    pausado = False
+
+                elif event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    quit()
+        clock.tick(FPS)
+
+
+def score(numero):
+    texto = fonte_pequena.render("Score: {0}".format(str(numero)), True, WHITE)
+    screen.blit(texto, [0, 0])
+
+
 def gerador_coelho():
     x_coelho = round(random.randrange(lado_coelho, WIDTH - lado_coelho))
     y_coelho = round(random.randrange(lado_coelho, HEIGHT - lado_coelho))
