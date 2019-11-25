@@ -226,3 +226,36 @@ def loop():
         cabeca_cobra.append(posicao_x)
         cabeca_cobra.append(posicao_y)
         lista_cobra.append(cabeca_cobra)
+        
+        if len(lista_cobra) > tamanho_cobra:
+            del lista_cobra[0]
+
+        for quadrado in lista_cobra[:-1]:
+            if quadrado == cabeca_cobra:
+                game_over = True
+
+        snake(lado_bloco, lista_cobra)
+        score(tamanho_cobra - 1)
+
+        if rand_coelho_x < posicao_x and posicao_x < (rand_coelho_x + lado_coelho) or rand_coelho_x < (posicao_x + lado_bloco)  and (posicao_x + lado_bloco) < (rand_coelho_x + lado_coelho):
+            if rand_coelho_y < posicao_y and posicao_y < (rand_coelho_y + lado_coelho):
+                tamanho_cobra += 1
+                rand_coelho_x, rand_coelho_y = gerador_coelho()
+                comendo.play()
+
+            elif rand_coelho_y < (posicao_y + lado_bloco) and (posicao_y + lado_bloco) < (rand_coelho_y + lado_coelho):
+                tamanho_cobra += 1
+                rand_coelho_x, rand_coelho_y = gerador_coelho()
+                comendo.play()
+
+        pygame.display.update()
+        clock.tick(FPS)
+
+    pygame.quit()
+    quit()
+
+
+try:
+    game_intro()
+finally:
+    game_loop()
