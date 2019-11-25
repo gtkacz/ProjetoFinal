@@ -216,3 +216,13 @@ def loop():
 
         posicao_x += mudar_x
         posicao_y += mudar_y
+
+        background_rect = fundo.get_rect()
+        screen.fill(BLACK)
+        screen.blit(fundo, background_rect)
+        screen.blit(coelho, [rand_coelho_x, rand_coelho_y, lado_coelho, lado_coelho])
+
+        cabeca_cobra = []
+        cabeca_cobra.append(posicao_x)
+        cabeca_cobra.append(posicao_y)
+        lista_cobra.append(cabeca_cobra)
