@@ -42,8 +42,8 @@ pygame.mixer.music.set_volume(0.4)
 pygame.display.flip()
 clock = pygame.time.Clock()
 
-lado_bloco = 20
-lado_coelho = 20
+lado_bloco = 40
+lado_coelho = 40
 
 direcao = "direita"
 
