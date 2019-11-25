@@ -32,12 +32,12 @@ coelho = pygame.image.load('coelho.png')
 fundo = pygame.image.load('ground.jpg')
 
 cabeca = pygame.transform.scale(cabeca, (40, 40))
-coelho = pygame.transform.scale(coelho, (40, 40))
+coelho = pygame.transform.scale(coelho, (30, 30))
 fundo = pygame.transform.scale(fundo, (WIDTH, HEIGHT))
 
 # musicas e sons
 pygame.mixer.music.load('musica_menu.wav')
-pygame.mixer.music.set_volume(0.4)
+pygame.mixer.music.set_volume(1)
 
 pygame.display.flip()
 clock = pygame.time.Clock()
@@ -97,8 +97,8 @@ def score(numero):
 
 
 def gerador_coelho():
-    x_coelho = round(random.randrange(lado_coelho, WIDTH - lado_coelho))
-    y_coelho = round(random.randrange(lado_coelho, HEIGHT - lado_coelho))
+    x_coelho = round(random.randrange(lado_coelho, WIDTH - lado_coelho, step=lado_coelho+1))
+    y_coelho = round(random.randrange(lado_coelho, HEIGHT - lado_coelho, step=lado_coelho+1))
     return x_coelho, y_coelho
 
 
@@ -167,7 +167,7 @@ def loop():
     # para acompanhar o primeiro bloco da cobra
     posicao_x = WIDTH / 2
     posicao_y = HEIGHT / 2
-    mudar_x = 10
+    mudar_x = 20
     mudar_y = 0
 
     # lista do tamanho da cobra (o último item é a cabeça)
@@ -180,7 +180,7 @@ def loop():
     while not game_exit:
 
         if game_over is True:
-            mensagem("Você Perdeu :(", RED, posicao_y=-50, tam="gde")
+            mensagem("Você perdeu :(", RED, posicao_y=-50, tam="gde")
             mensagem("Aperte espaço para jogar de novo,", WHITE, posicao_y=50, tam="med")
             mensagem("ou aperte Esc para sair.", WHITE, posicao_y=100, tam="med")
             pygame.display.update()
@@ -227,8 +227,8 @@ def loop():
                     game_exit = True
 
         # limite da tela
-        if posicao_x >= (WIDTH - lado_bloco) or posicao_x < lado_bloco or posicao_y >= (
-                HEIGHT - lado_bloco) or posicao_y < lado_bloco:
+        if posicao_x >= (WIDTH) or posicao_x < 0 or posicao_y >= (
+                HEIGHT) or posicao_y < 0:
             game_over = True
 
         # atualiza posicao cobra
