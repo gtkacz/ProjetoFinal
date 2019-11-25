@@ -88,3 +88,12 @@ def snake(lado, lista_cobra):
     for x_y in lista_cobra[:-1]:
         pygame.draw.rect(screen, GREEN,
                          [x_y[0], x_y[1], lado, lado])
+
+def text_objects(texto, cor, tamanho):
+    if tamanho == "peq":
+        local_texto = fonte_pequena.render(texto, True, cor)
+    elif tamanho == "med":
+        local_texto = fonte_media.render(texto, True, cor)
+    elif tamanho == "gde":
+        local_texto = fonte_grande.render(texto, True, cor)
+    return local_texto, local_texto.get_rect()
