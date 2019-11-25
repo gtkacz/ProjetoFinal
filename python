@@ -1,9 +1,12 @@
+# importando bibliotecas
 import pygame
 import random
 
+# inicializando
 pygame.init()
 pygame.mixer.init()
 
+# cores
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
@@ -12,14 +15,18 @@ BLUE = (0, 0, 255)
 YELLOW = (255, 255, 0)
 ORANGE = (224, 81, 18)
 
+# dados do jogo
 WIDTH = 800
 HEIGHT = 600
 FPS = 5
 
+# tamanho da tela
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
+# nome do jogo
 pygame.display.set_caption("Cobrinha")
 
+#sprites
 cabeca = pygame.image.load('cabeca.png')
 coelho = pygame.image.load('coelho.png')
 fundo = pygame.image.load('ground.png')
@@ -28,6 +35,7 @@ cabeca = pygame.transform.scale(cabeca, (20, 20))
 coelho = pygame.transform.scale(coelho, (20, 20))
 fundo = pygame.transform.scale(fundo, (WIDTH, HEIGHT))
 
+# musicas e sons
 pygame.mixer.music.load('musica_menu.wav')
 pygame.mixer.music.set_volume(0.4)
 
@@ -39,10 +47,12 @@ lado_coelho = 20
 
 direcao = "direita"
 
+# fontes por tamanho
 fonte_pequena = pygame.font.SysFont("comicsansms", 24)
 fonte_media = pygame.font.SysFont("comicsansms", 48)
 fonte_grande = pygame.font.SysFont("comicsansms", 72)
 
+#menu pausa
 def pause():
     pausado = True
     message_to_screen("Pausado", WHITE, -100, "gde")
@@ -65,6 +75,7 @@ def pause():
         clock.tick(FPS)
 
 
+#placar
 def score(numero):
     texto = fonte_pequena.render("Score: {0}".format(str(numero)), True, WHITE)
     screen.blit(texto, [0, 0])
@@ -150,11 +161,15 @@ def loop():
     direcao = "direita"
     game_exit = False
     game_over = False
+    
+    # para acompanhar o primeiro bloco da cobra
 
     posicao_x = WIDTH / 2
     posicao_y = HEIGHT / 2
     mudar_x = 10
     mudar_y = 0
+    
+    # lista do tamanho da cobra (o último item é a cabeça)
 
     lista_cobra = []
     tamanho_cobra = 1
@@ -211,17 +226,21 @@ def loop():
                 elif event.key == pygame.K_ESCAPE:
                     game_exit = True
 
+        # limite da tela
         if posicao_x >= (WIDTH - lado_bloco) or posicao_x < lado_bloco or posicao_y >= (HEIGHT - lado_bloco) or posicao_y < lado_bloco:
             game_over = True
 
+        # atualiza posicao cobra
         posicao_x += mudar_x
         posicao_y += mudar_y
 
+        # background
         background_rect = fundo.get_rect()
         screen.fill(BLACK)
         screen.blit(fundo, background_rect)
         screen.blit(coelho, [rand_coelho_x, rand_coelho_y, lado_coelho, lado_coelho])
 
+        # cria a cobra e atualiza ela no último ponto
         cabeca_cobra = []
         cabeca_cobra.append(posicao_x)
         cabeca_cobra.append(posicao_y)
@@ -249,8 +268,10 @@ def loop():
                 comendo.play()
 
         pygame.display.update()
+        # FPS
         clock.tick(FPS)
 
+    # sai do pygame
     pygame.quit()
     quit()
 
