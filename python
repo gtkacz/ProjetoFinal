@@ -26,7 +26,7 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 # nome do jogo
 pygame.display.set_caption("Cobrinha")
 
-#sprites
+# sprites
 cabeca = pygame.image.load('cabeca.png')
 coelho = pygame.image.load('coelho.png')
 fundo = pygame.image.load('ground.png')
@@ -52,11 +52,26 @@ fonte_pequena = pygame.font.SysFont("comicsansms", 24)
 fonte_media = pygame.font.SysFont("comicsansms", 48)
 fonte_grande = pygame.font.SysFont("comicsansms", 72)
 
-#menu pausa
+def texto(texto, cor, tamanho):
+    if tamanho == "peq":
+        local_texto = fonte_pequena.render(texto, True, cor)
+    elif tamanho == "med":
+        local_texto = fonte_media.render(texto, True, cor)
+    elif tamanho == "gde":
+        local_texto = fonte_grande.render(texto, True, cor)
+    return local_texto, local_texto.get_rect()
+
+
+def mensagem(msg, cor, posicao_y=0, tam="peq"):
+    local_texto, rect_texto = texto(msg, cor, tam)
+    rect_texto.center = (WIDTH / 2), (HEIGHT / 2) + posicao_y
+    screen.blit(local_texto, rect_texto)
+
+# menu pausa
 def pause():
     pausado = True
-    message_to_screen("Pausado", WHITE, -100, "gde")
-    message_to_screen("Aperte Espaço para continuar ou Esc para sair.", WHITE, 25)
+    mensagem("Pausado", WHITE, -100, "gde")
+    mensagem("Aperte Espaço para continuar ou Esc para sair.", WHITE, 25)
     pygame.display.update()
 
     while pausado:
@@ -75,7 +90,7 @@ def pause():
         clock.tick(FPS)
 
 
-#placar
+# placar
 def score(numero):
     texto = fonte_pequena.render("Placar: {0}".format(str(numero)), True, WHITE)
     screen.blit(texto, [0, 0])
@@ -85,6 +100,7 @@ def gerador_coelho():
     x_coelho = round(random.randrange(lado_coelho, WIDTH - lado_coelho))
     y_coelho = round(random.randrange(lado_coelho, HEIGHT - lado_coelho))
     return x_coelho, y_coelho
+
 
 rand_coelho_x = gerador_coelho()[0]
 rand_coelho_y = gerador_coelho()[1]
@@ -104,21 +120,6 @@ def snake(lado, lista_cobra):
     for x_y in lista_cobra[:-1]:
         pygame.draw.rect(screen, GREEN,
                          [x_y[0], x_y[1], lado, lado])
-
-def texto(texto, cor, tamanho):
-    if tamanho == "peq":
-        local_texto = fonte_pequena.render(texto, True, cor)
-    elif tamanho == "med":
-        local_texto = fonte_media.render(texto, True, cor)
-    elif tamanho == "gde":
-        local_texto = fonte_grande.render(texto, True, cor)
-    return local_texto, local_texto.get_rect()
-
-def mensagem(msg, cor, posicao_y=0, tam="peq"):
-    local_texto, rect_texto = texto(msg, cor, tam)
-    rect_texto.center = (WIDTH / 2), (HEIGHT / 2) + posicao_y
-    screen.blit(local_texto, rect_texto)
-
 
 def intro():
     pygame.mixer.music.load('musica_menu.wav')
@@ -145,11 +146,12 @@ def intro():
         mensagem("Coma os coelinhos e cresça.", WHITE, -10)
         mensagem("Se você bater em si, ou", RED, 40)
         mensagem("nas bordas, você morre!",
-                          RED, 80)
+                 RED, 80)
         mensagem("Aperte Espaço para começar, P para pausar e Esc para sair.", WHITE, 180)
 
         pygame.display.update()
         clock.tick(FPS)
+
 
 def loop():
     pygame.mixer.music.load("musica_jogo.wav")
@@ -161,28 +163,26 @@ def loop():
     direcao = "direita"
     game_exit = False
     game_over = False
-    
-    # para acompanhar o primeiro bloco da cobra
 
+    # para acompanhar o primeiro bloco da cobra
     posicao_x = WIDTH / 2
     posicao_y = HEIGHT / 2
     mudar_x = 10
     mudar_y = 0
-    
-    # lista do tamanho da cobra (o último item é a cabeça)
 
+    # lista do tamanho da cobra (o último item é a cabeça)
     lista_cobra = []
     tamanho_cobra = 1
 
     rand_coelho_x = gerador_coelho()[0]
     rand_coelho_y = gerador_coelho()[1]
-    
+
     while not game_exit:
 
         if game_over is True:
-            message_to_screen("Você Perdeu :(", RED, posicao_y=-50, tam="gde")
-            message_to_screen("Aperte espaço para jogar de novo,", WHITE, posicao_y=50, tam="med")
-            message_to_screen("ou aperte Esc para sair.", WHITE, posicao_y=100, tam="med")
+            mensagem("Você Perdeu :(", RED, posicao_y=-50, tam="gde")
+            mensagem("Aperte espaço para jogar de novo,", WHITE, posicao_y=50, tam="med")
+            mensagem("ou aperte Esc para sair.", WHITE, posicao_y=100, tam="med")
             pygame.display.update()
 
         while game_over is True:
@@ -195,7 +195,7 @@ def loop():
                         game_exit = True
                         game_over = False
                     if event.key == pygame.K_SPACE:
-                        game_loop()
+                        loop()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -227,7 +227,8 @@ def loop():
                     game_exit = True
 
         # limite da tela
-        if posicao_x >= (WIDTH - lado_bloco) or posicao_x < lado_bloco or posicao_y >= (HEIGHT - lado_bloco) or posicao_y < lado_bloco:
+        if posicao_x >= (WIDTH - lado_bloco) or posicao_x < lado_bloco or posicao_y >= (
+                HEIGHT - lado_bloco) or posicao_y < lado_bloco:
             game_over = True
 
         # atualiza posicao cobra
@@ -245,7 +246,7 @@ def loop():
         cabeca_cobra.append(posicao_x)
         cabeca_cobra.append(posicao_y)
         lista_cobra.append(cabeca_cobra)
-        
+
         if len(lista_cobra) > tamanho_cobra:
             del lista_cobra[0]
 
@@ -256,7 +257,8 @@ def loop():
         snake(lado_bloco, lista_cobra)
         score(tamanho_cobra - 1)
 
-        if rand_coelho_x < posicao_x and posicao_x < (rand_coelho_x + lado_coelho) or rand_coelho_x < (posicao_x + lado_bloco)  and (posicao_x + lado_bloco) < (rand_coelho_x + lado_coelho):
+        if rand_coelho_x < posicao_x and posicao_x < (rand_coelho_x + lado_coelho) or rand_coelho_x < (
+                posicao_x + lado_bloco) and (posicao_x + lado_bloco) < (rand_coelho_x + lado_coelho):
             if rand_coelho_y < posicao_y and posicao_y < (rand_coelho_y + lado_coelho):
                 tamanho_cobra += 1
                 rand_coelho_x, rand_coelho_y = gerador_coelho()
