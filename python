@@ -161,3 +161,53 @@ def loop():
 
     rand_coelho_x = gerador_coelho()[0]
     rand_coelho_y = gerador_coelho()[1]
+    
+    while not game_exit:
+
+        if game_over is True:
+            message_to_screen("Você Perdeu :(", RED, posicao_y=-50, tam="gde")
+            message_to_screen("Aperte espaço para jogar de novo,", WHITE, posicao_y=50, tam="med")
+            message_to_screen("ou aperte Esc para sair.", WHITE, posicao_y=100, tam="med")
+            pygame.display.update()
+
+        while game_over is True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    game_exit = True
+                    game_over = False
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        game_exit = True
+                        game_over = False
+                    if event.key == pygame.K_SPACE:
+                        game_loop()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                game_exit = True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    if direcao != 'direita':
+                        direcao = "esquerda"
+                        mudar_x = -lado_bloco
+                        mudar_y = 0
+                elif event.key == pygame.K_RIGHT:
+                    if direcao != 'esquerda':
+                        direcao = "direita"
+                        mudar_x = lado_bloco
+                        mudar_y = 0
+                elif event.key == pygame.K_UP:
+                    if direcao != 'baixo':
+                        direcao = "cima"
+                        mudar_y = -lado_bloco
+                        mudar_x = 0
+                elif event.key == pygame.K_DOWN:
+                    if direcao != "cima":
+                        direcao = "baixo"
+                        mudar_y = lado_bloco
+                        mudar_x = 0
+                elif event.key == pygame.K_p:
+                    pause()
+                elif event.key == pygame.K_ESCAPE:
+                    game_exit = True
+
