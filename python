@@ -77,7 +77,7 @@ def pause():
 
 #placar
 def score(numero):
-    texto = fonte_pequena.render("Score: {0}".format(str(numero)), True, WHITE)
+    texto = fonte_pequena.render("Placar: {0}".format(str(numero)), True, WHITE)
     screen.blit(texto, [0, 0])
 
 
@@ -277,6 +277,6 @@ def loop():
 
 
 try:
-    game_intro()
+    intro()
 finally:
-    game_loop()
+    loop()
