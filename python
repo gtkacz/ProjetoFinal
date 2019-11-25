@@ -211,3 +211,8 @@ def loop():
                 elif event.key == pygame.K_ESCAPE:
                     game_exit = True
 
+        if posicao_x >= (WIDTH - lado_bloco) or posicao_x < lado_bloco or posicao_y >= (HEIGHT - lado_bloco) or posicao_y < lado_bloco:
+            game_over = True
+
+        posicao_x += mudar_x
+        posicao_y += mudar_y
