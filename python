@@ -37,7 +37,7 @@ fundo = pygame.transform.scale(fundo, (WIDTH, HEIGHT))
 
 # musicas e sons
 pygame.mixer.music.load('musica_menu.wav')
-pygame.mixer.music.set_volume(1)
+pygame.mixer.music.set_volume(0.7)
 
 pygame.display.flip()
 clock = pygame.time.Clock()
